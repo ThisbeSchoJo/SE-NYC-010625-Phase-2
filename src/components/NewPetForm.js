@@ -17,12 +17,30 @@ function NewPetForm({addPet}) {
     event.preventDefault()
 
     const newPet = {
-      id: uuid(),
+      // id: uuid(),
       ...formData,
       likes: 0
     }
 
-    addPet(newPet)
+    // addPet(newPet)
+
+    fetch("http://localhost:4000/pets", {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+        //Don't need an accept currently
+      },
+      body: JSON.stringify(newPet) //newPet has the info we want to send to the server
+    })
+    .then(response => {
+      if(response.ok) {
+        response.json().then(newPetData => addPet(newPetData))
+      }
+      else {
+        alert("Error: Unable to add new pet!")
+      }
+    })
+
     
     setFormData({
       name: "",
