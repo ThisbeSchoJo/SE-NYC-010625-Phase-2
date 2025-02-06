@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 // Delete the addPet prop from the NewPetForm component
-function NewPetForm({addPet}) {
+function NewPetForm() {
 
   // Write the code to retrieve the addPet function using useOutletContext()
-
+  const { addPet } = useOutletContext()
   // Write the code to get a function that can be used to navigate to another route using useNavigate() and store it into a variable named navigate
 
   const [formData, setFormData] = useState({
@@ -12,6 +13,10 @@ function NewPetForm({addPet}) {
     image: "",
     animal_type: ""
   });
+
+  //useNavigate will return another function
+  //the function that is returned is what you can use for your navigation
+  const navigate = useNavigate()
 
   function updateFormData(event){
     setFormData({...formData, [event.target.name]: event.target.value})
@@ -33,6 +38,9 @@ function NewPetForm({addPet}) {
     });
 
     // Write the code to call your navigate() function that you created earlier. Pass in an argument of "/" to your navigate function so that the website will navigate to the "/" route when the form is submitted
+    console.log(useNavigate)
+    navigate('/')
+  
   }
 
   return (
